@@ -3,9 +3,12 @@
 
 class SymbolTable {
 private:
-	HashTable<std::string> hashTable = HashTable<std::string>();
+	HashTable<std::string, int> hashTable;
 public:
-	void add(std::string entry);
-	bool contains(std::string entry);
-	std::pair<int, int> getPosition(std::string entry);
+	static int globalPosition;
+
+	SymbolTable();
+	void add(std::string symbol);
+	bool contains(std::string symbol);
+	int getPosition(std::string symbol);
 };

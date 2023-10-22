@@ -1,16 +1,25 @@
 #include "SymbolTable.h"
 
-void SymbolTable::add(std::string entry)
+int SymbolTable::globalPosition;
+
+SymbolTable::SymbolTable()
 {
-	hashTable.add(entry, entry);
+	SymbolTable::globalPosition = 0;
 }
 
-bool SymbolTable::contains(std::string entry)
+void SymbolTable::add(std::string symbol)
 {
-	return hashTable.contains(entry);
+	hashTable.add(symbol, SymbolTable::globalPosition);
+	SymbolTable::globalPosition++;
 }
 
-std::pair<int, int> SymbolTable::getPosition(std::string entry)
+bool SymbolTable::contains(std::string symbol)
 {
-	return hashTable.getPosition(entry);
+	return hashTable.contains(symbol);
+}
+
+int SymbolTable::getPosition(std::string symbol)
+{
+	int* value = hashTable.get(symbol);
+	return value ? *value : -1;
 }

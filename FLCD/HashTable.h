@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
 
-template<typename K, typename V = K>
+template<typename K, typename V>
 class HashTable {
 private:
 	struct HashBucket {
@@ -24,6 +24,6 @@ public:
 	HashTable();
 	void add(K key, V value);
 	bool contains(K key);
-	std::pair<int, int> getPosition(K key);
+	V* get(K key);
 	~HashTable();
 };

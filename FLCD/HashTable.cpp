@@ -108,44 +108,27 @@ void HashTable<K, V>::resize()
 }
 
 template<typename K, typename V>
-std::pair<int, int> HashTable<K, V>::getPosition(K key)
+V* HashTable<K, V>::get(K key)
 {
 	int hashValue = hash(key);
-	int pos1 = hashValue;
 	if (buckets[hashValue] != nullptr)
 	{
 		HashBucket* current = buckets[hashValue];
-		int pos2 = 0;
 		while (current)
 		{
 			if (current->key == key)
 			{
-				return std::pair<int, int>{pos1, pos2};
+				return &current->value;
 			}
-			pos2++;
 			current = current->next;
 		}
 	}
 
-	return std::pair<int, int>{-1, -1};
+	return nullptr;
 }
 
 template<typename K, typename V>
 bool HashTable<K, V>::contains(K key)
 {
-	int hashValue = hash(key);
-	if (buckets[hashValue] != nullptr)
-	{
-		HashBucket* current = buckets[hashValue];
-		while (current)
-		{
-			if (current->key == key)
-			{
-				return true;
-			}
-			current = current->next;
-		}
-	}
-
-	return false;
+	return get(key) != nullptr;
 }
