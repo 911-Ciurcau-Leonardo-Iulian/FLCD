@@ -127,7 +127,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="HashTable.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SymbolTable.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="HashTable.h" />
+    <ClInclude Include="SymbolTable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
