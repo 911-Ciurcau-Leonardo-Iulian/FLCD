@@ -52,13 +52,19 @@ void Scanner::scan(std::string programFile)
 						newWord += token[j];
 					}
 					i = j - 1;
-					std::cout << newWord << '\n';
+					// newWord is reserved word or operator or separator		
+					//std::cout << newWord << '\n';
 					currentWord = "";
 				}
 
 				else if (tokens.contains(std::string(1, token[i])))
 				{
-					std::cout << "symbol " << currentWord << '\n';
+					//std::cout << "symbol " << currentWord << '\n';
+					int position = symbolTable.getPosition(currentWord);
+					if (position < 0)
+					{
+						position = symbolTable.add(currentWord);
+					}
 					currentWord = "";
 					i--;
 				}
@@ -70,7 +76,12 @@ void Scanner::scan(std::string programFile)
 			}
 			if (currentWord.size() > 0)
 			{
-				std::cout << "symbol " << currentWord << '\n';
+				//std::cout << "symbol " << currentWord << '\n';
+				int position = symbolTable.getPosition(currentWord);
+				if (position < 0)
+				{
+					position = symbolTable.add(currentWord);
+				}
 			}
 			token = strtok_s(nullptr, delimiters, &nextToken);
 		}
