@@ -1,0 +1,12 @@
+def int main():
+	int 1n, ma[x = -1
+	read(n)
+	for [int i = 1, i <= n, i++]:
+		int x
+		read(x)
+		if [x > max]:
+			max = x
+		end
+	print(max)
+	ret 0
+end

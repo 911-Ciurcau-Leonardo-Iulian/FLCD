@@ -129,11 +129,20 @@
   <ItemGroup>
     <ClCompile Include="HashTable.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Scanner.cpp" />
     <ClCompile Include="SymbolTable.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HashTable.h" />
+    <ClInclude Include="Scanner.h" />
     <ClInclude Include="SymbolTable.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="p1.txt" />
+    <Text Include="p1err.txt" />
+    <Text Include="p2.txt" />
+    <Text Include="p3.txt" />
+    <Text Include="tokens.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

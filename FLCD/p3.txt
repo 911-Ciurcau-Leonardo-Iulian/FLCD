@@ -1,0 +1,11 @@
+def int main():
+	int n, sum = 0
+	read(n)
+	for [int i = 1, i <= n, i++]:
+		int x
+		read(x)
+		sum += x
+	end
+	print(sum)
+	ret 0
+end

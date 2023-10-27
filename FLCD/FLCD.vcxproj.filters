@@ -24,6 +24,9 @@
     <ClCompile Include="SymbolTable.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Scanner.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HashTable.h">
@@ -32,5 +35,25 @@
     <ClInclude Include="SymbolTable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Scanner.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="p1.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="p1err.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="p2.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="p3.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
+    <Text Include="tokens.txt">
+      <Filter>Resource Files</Filter>
+    </Text>
   </ItemGroup>
 </Project>
