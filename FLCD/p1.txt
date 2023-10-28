@@ -8,6 +8,6 @@ def int main():
 	if[c>max]:
 		max=c
 	end
-	print(c)
+	print(max)
 	ret 0
 end

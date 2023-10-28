@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include <fstream>
 #include "HashTable.cpp"
 
 class SymbolTable {
@@ -14,4 +15,5 @@ public:
 	bool contains(std::string symbol);
 	int getPosition(std::string symbol);
 	std::string getSymbol(int position);
+	void fprint(std::string outputFile);
 };

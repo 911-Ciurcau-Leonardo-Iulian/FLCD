@@ -28,5 +28,21 @@ int SymbolTable::getPosition(std::string symbol)
 
 std::string SymbolTable::getSymbol(int position)
 {
-	return positionList.at(position);
+	return positionList[position];
+}
+
+void SymbolTable::fprint(std::string outputFile)
+{
+	std::ofstream fout(outputFile);
+	if (!fout.is_open())
+	{
+		throw std::runtime_error("file could not be opened");
+	}
+
+	for (int i = 0; i < globalPosition; i++)
+	{
+		fout << i << ' ' << positionList[i] << '\n';
+	}
+
+	fout.close();
 }

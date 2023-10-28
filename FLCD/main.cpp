@@ -7,16 +7,17 @@
 
 int main()
 {
-	try {
+	try 
+	{
 		SymbolTable symbolTable = SymbolTable();
-		Scanner scanner = Scanner("tokens.txt", symbolTable);
-		scanner.scan("p1.txt");
-		for (int i = 0; i < symbolTable.globalPosition; i++)
-		{
-			std::cout << i << ' ' << symbolTable.getSymbol(i) << '\n';
-		}
+		ProgramInternalForm programInternalForm = ProgramInternalForm();
+		Scanner scanner = Scanner("tokens.txt", symbolTable, programInternalForm);
+		scanner.scan("p3.txt");
+		symbolTable.fprint("st.out");
+		programInternalForm.fprint("pif.out", scanner.getTokensPositionList());
 	}
-	catch (std::exception& e) {
+	catch (std::exception& e) 
+	{
 		std::cout << e.what();
 	}
 
