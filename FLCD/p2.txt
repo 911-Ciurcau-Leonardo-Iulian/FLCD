@@ -17,8 +17,8 @@ def bool prime(int n):
 	elif [n % 2 =: 0]:
 		ret false
 	else:
-		for [int d = 3, d * d <= n, d += 2]
-			if [n % d =: 0]
+		for [int d = 3, d * d <= n, d += 2]:
+			if [n % d =: 0]:
 				ret false
 	end
 	ret true 
