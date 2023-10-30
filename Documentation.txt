@@ -1,13 +1,53 @@
-https://github.com/911-Ciurcau-Leonardo-Iulian/FLCD/tree/Lab2SymbolTable
+https://github.com/911-Ciurcau-Leonardo-Iulian/FLCD/tree/Lab3Scanner
+
+
++class ProgramInternalForm
+	+enum Identifer { ID, CONSTANT }
+
+	+struct PIFItem
+		code: Integer # can be ID, CONSTANT, or code for the reserved symbol
+		symbolTablePosition: Integer
+	
+	-pif: List<PIFItem> # used for storing the items in the pif
+
+	+add(code: Integer, symbolTablePosition: Integer)
+	+fprint(outputFile: String, tokensPositionList: List<String) # prints the pif to the given file, using tokensPositionList for reserved symbols
+
+
+
++class SyntaxErrorException
+	+SyntaxErrorException(message: String, line: Integer) # used for outputing an error with format: `Syntax error at line {line}: {message}`
+
+
++class Scanner
+	-tokens: HashTable<String, Integer> # used for storing reserved words
+	-tokensPositionList: List<String> # the inverse of the hash table, for mapping positions to reserved words
+	-symbolTable: SymbolTable
+	-programInternalForm: ProgramInternalForm
+	-lineCount: Integer # used for storing the current line in the input program
+	-computePosition(symbol: String): Integer # retrieves the position of the symbol from the symbol table, and adds it to the symbol table beforehand if it does not yet exist there
+	+static globalTokenId: Integer # used for attributing and storing codes for the reserved words
+
+	-addIdentifier(identifier: String) # adds an identifier to the pif
+	-determineIdentifierType(identifier: String): Identifier # determines if identifier is id or constant, and also throws SyntaxError if it is not a valid one
+	+Scanner(tokensFile: String, symbolTable: SymbolTable, programInternalForm: ProgramInternalForm) # initializes the scanner, computes and stores the reserved words from tokensFile, by attributing them a code which is their position in tokensPositionList
+	+scan(programFile: String) # scans the program from programFile
+		# there are multiple cases taken into account here, and they can be found in the comments from the source code
+	+getTokensPositionList(): List<String> # returns tokensPositionList
+	
+
 
 +class SymbolTable
 	-hashTable: HashTable<String, Integer> # the hash table used for storing the symbols
+	-positionList: List<String> # the inverse of the hash table, for mapping positions to symbols
 	+static globalPosition: Integer # used for storing the positions of symbols
 
 	+SymbolTable()
 	+add(symbol: String) # adds a symbol to the symbol table with the current globalPosition as value, then increments globalPosition
 	+contains(symbol: String): boolean # return true if a symbol exists in the table, false otherwise
 	+getPosition(symbol: String): Integer # gets the position of the symbol if it exists, -1 otherwise
+	+getSymbol(position: Integer): String # gets the symbol at the given position
+	+fprint(outputFile: String): # prints the symbol table to the given file
 	
 +class HashTable<K, V>
 	-struct HashBucket

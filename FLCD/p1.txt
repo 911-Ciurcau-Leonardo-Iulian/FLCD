@@ -1,0 +1,13 @@
+def int main():
+	int a,b,c,max
+	read(a,b,c)
+	max=a
+	if[b > max]:
+		max=b
+	end
+	if[c>max]:
+		max=c
+	end
+	print(max)
+	ret 0
+end

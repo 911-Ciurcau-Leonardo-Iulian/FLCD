@@ -129,11 +129,28 @@
   <ItemGroup>
     <ClCompile Include="HashTable.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ProgramInternalForm.cpp" />
+    <ClCompile Include="Scanner.cpp" />
     <ClCompile Include="SymbolTable.cpp" />
+    <ClCompile Include="SyntaxErrorException.cpp" />
+    <ClCompile Include="SyntaxErrorException.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HashTable.h" />
+    <ClInclude Include="ProgramInternalForm.h" />
+    <ClInclude Include="Scanner.h" />
     <ClInclude Include="SymbolTable.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="p1.txt" />
+    <Text Include="p1err.txt" />
+    <Text Include="p2.txt" />
+    <Text Include="p3.txt" />
+    <Text Include="tokens.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="pif.out" />
+    <None Include="st.out" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
