@@ -4,6 +4,7 @@
 #include <iostream>
 #include "SymbolTable.h"
 #include "ProgramInternalForm.h"
+#include "SyntaxErrorException.h"
 
 class Scanner {
 private:
@@ -11,8 +12,11 @@ private:
 	std::vector<std::string> tokensPositionList;
 	SymbolTable& symbolTable;
 	ProgramInternalForm& programInternalForm;
+	int lineCount;
 
 	int computePosition(std::string symbol);
+	void addIdentifier(std::string identifier);
+	ProgramInternalForm::Identifier determineIdentifierType(std::string identifier);
 public:
 	static int globalTokenId;
 

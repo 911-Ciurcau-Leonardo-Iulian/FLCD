@@ -8,6 +8,7 @@ void ProgramInternalForm::add(int code, int symbolTablePosition)
 void ProgramInternalForm::fprint(std::string outputFile, std::vector<std::string>& tokensPositionList)
 {
 	std::ofstream fout(outputFile);
+
 	if (!fout.is_open())
 	{
 		throw std::runtime_error("file could not be opened");
@@ -18,7 +19,7 @@ void ProgramInternalForm::fprint(std::string outputFile, std::vector<std::string
 		switch (item.code)
 		{
 		case Identifier::CONSTANT:
-			fout << "constant";
+			fout << "const";
 			break;
 		case Identifier::ID:
 			fout << "id";

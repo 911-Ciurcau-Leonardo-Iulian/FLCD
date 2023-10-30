@@ -30,6 +30,12 @@
     <ClCompile Include="ProgramInternalForm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SyntaxErrorException.h">
+      <Filter>Header Files</Filter>
+    </ClCompile>
+    <ClCompile Include="SyntaxErrorException.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HashTable.h">

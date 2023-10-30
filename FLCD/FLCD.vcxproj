@@ -132,6 +132,8 @@
     <ClCompile Include="ProgramInternalForm.cpp" />
     <ClCompile Include="Scanner.cpp" />
     <ClCompile Include="SymbolTable.cpp" />
+    <ClCompile Include="SyntaxErrorException.cpp" />
+    <ClCompile Include="SyntaxErrorException.h" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HashTable.h" />

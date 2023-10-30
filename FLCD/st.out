@@ -4,5 +4,7 @@
 3 ' is not prime'
 4 0
 5 2
-6 d
-7 3
+6 false
+7 true
+8 d
+9 3

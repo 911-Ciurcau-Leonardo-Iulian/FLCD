@@ -1,6 +1,6 @@
 def int main():
 	int n
-	read(n)
+	read(n)//test comment read(n)
 	if [prime(n)]:
 		print(n, ' is prime')
 	else:

@@ -12,6 +12,7 @@ int SymbolTable::add(std::string symbol)
 	hashTable.add(symbol, SymbolTable::globalPosition);
 	positionList.push_back(symbol);
 	SymbolTable::globalPosition++;
+
 	return SymbolTable::globalPosition - 1;
 }
 
@@ -23,6 +24,7 @@ bool SymbolTable::contains(std::string symbol)
 int SymbolTable::getPosition(std::string symbol)
 {
 	int* value = hashTable.get(symbol);
+
 	return value ? *value : -1;
 }
 
@@ -34,6 +36,7 @@ std::string SymbolTable::getSymbol(int position)
 void SymbolTable::fprint(std::string outputFile)
 {
 	std::ofstream fout(outputFile);
+
 	if (!fout.is_open())
 	{
 		throw std::runtime_error("file could not be opened");

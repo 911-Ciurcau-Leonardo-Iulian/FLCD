@@ -2,8 +2,13 @@
 
 int Scanner::globalTokenId;
 
-Scanner::Scanner(std::string tokensFile, SymbolTable& symbolTable, ProgramInternalForm& programInternalForm) : 
-	symbolTable(symbolTable), programInternalForm(programInternalForm)
+Scanner::Scanner(
+	std::string tokensFile, 
+	SymbolTable& symbolTable, 
+	ProgramInternalForm& programInternalForm
+) : symbolTable(symbolTable),
+	programInternalForm(programInternalForm),
+	lineCount(0)
 {
 	std::ifstream fin(tokensFile);
 	std::string currentToken;
@@ -48,19 +53,24 @@ void Scanner::scan(std::string programFile)
 
 	std::string currentLine, originalCurrentLine;
 	const char* delimiters = " \t";
+	lineCount = 0;
+
 	while (std::getline(fin, currentLine))
-	{	/// TODO: treat chars, boolean constants
-		/// TODO: treat comments
+	{
+		lineCount++;
 		originalCurrentLine = currentLine;
 		char* nextToken = nullptr;
 		char* token = strtok_s(const_cast<char*>(currentLine.c_str()), delimiters, &nextToken);
+
 		while (token)
 		{
 		while_token_label:
 			std::string currentWord = "";
+
 			for (int i = 0; token[i]; i++)
 			{
 				std::string newWord = currentWord + token[i];
+
 				if (token[i] == '\'')
 				{
 					// beginning of string
@@ -69,28 +79,34 @@ void Scanner::scan(std::string programFile)
 						// before beginning of string we have a reserved word
 						programInternalForm.add(*tokens.get(currentWord), -1);
 					}
+
 					else if (currentWord.size() > 0)
 					{
 						// before beginning of string we have an id or const, which is illegal
-						throw std::runtime_error("syntax error"); /// TODO: be more explicit
+						throw SyntaxErrorException("misplaced string", lineCount);
 					}
+
 					// if we are looking inside a string literal, we have to take spaces into account
 					// so we will look into the original string, with spaces
 					const char* originalStringPosition = (token + i - currentLine.c_str()) + originalCurrentLine.c_str();
+					
+					if (strchr(originalStringPosition + 1, '\'') == nullptr)
+					{
+						// end quote not found
+						throw SyntaxErrorException("end quote of string not found", lineCount);
+					}
+					
 					char* afterStringToken = nullptr;
 					char* stringContent = strtok_s((char*)originalStringPosition + 1, "'", &afterStringToken);
-					if (stringContent == nullptr)
-					{
-						// end quote was not found
-						throw std::runtime_error("syntax error"); /// TODO: be more explicit
-					}
-
 					std::string stringLiteral = "'" + std::string(stringContent) + "'";
+
 					int position = symbolTable.getPosition(stringLiteral);
+
 					if (position < 0)
 					{
 						position = symbolTable.add(stringLiteral);
 					}
+
 					programInternalForm.add(ProgramInternalForm::Identifier::CONSTANT, position);
 
 					nextToken = nullptr;
@@ -103,18 +119,39 @@ void Scanner::scan(std::string programFile)
 					// if currentWord + token[i] is from tokens, check if it belongs to a greater token
 					// for example, if currentWord + token[i] = ">", check if it could actually be ">="
 					int j;
+
 					for (j = i + 1; token[j]; j++)
 					{
 						std::string s = newWord + token[j];
+
 						if (!tokens.contains(s))
 						{
 							break;
 						}
+
 						newWord += token[j];
 					}
+
 					i = j - 1;
-					// here, newWord is a reserved word, operator, or separator		
-					programInternalForm.add(*tokens.get(newWord), -1);
+
+					// here, newWord is a reserved word, operator, or separator	
+					// but there could also be the case of false or true, in that case it is a constant
+					if (newWord == "true" || newWord == "false")
+					{
+						addIdentifier(newWord);
+					}
+
+					else if (newWord == "//")
+					{
+						// beginning of comment
+						goto next_line_label;
+					}
+
+					else
+					{
+						programInternalForm.add(*tokens.get(newWord), -1);
+					}
+
 					currentWord = "";
 				}
 
@@ -122,8 +159,7 @@ void Scanner::scan(std::string programFile)
 				{
 					// if currentWord + token[i] is not from tokens, but token[i] is from tokens,
 					// then it means that currentWord is a variable or constant that ends here
-					int position = computePosition(currentWord);
-					programInternalForm.add(-1, position); /// TODO: determine if it is id or const
+					addIdentifier(currentWord);
 					currentWord = "";
 					i--;
 				}
@@ -134,18 +170,68 @@ void Scanner::scan(std::string programFile)
 					currentWord += token[i];
 				}
 			}
+
 			if (currentWord.size() > 0)
 			{
 				// if the end of the current line is reached and currentWord is not empty,
 				// this means that currentWord is a variable or constant that ends at the end of the line
-				int position = computePosition(currentWord);
-				programInternalForm.add(-1, position); /// TODO: determine if it is id or const
+				addIdentifier(currentWord);
 			}
+
 			token = strtok_s(nullptr, delimiters, &nextToken);
 		}
+	next_line_label:
+		continue;
 	}
 
 	fin.close();
+}
+
+void Scanner::addIdentifier(std::string identifier)
+{
+	int position = computePosition(identifier);
+	ProgramInternalForm::Identifier identifierType = determineIdentifierType(identifier);
+	programInternalForm.add(identifierType, position);
+}
+
+ProgramInternalForm::Identifier Scanner::determineIdentifierType(std::string identifier)
+{
+	if (isdigit(identifier[0]))
+	{
+		for (int i = 1; i < identifier.size(); i++)
+		{
+			if (!isdigit(identifier[0]))
+			{
+				throw SyntaxErrorException("variable cannot start with digit", lineCount);
+			}
+		}
+
+		// numeric constant
+		return ProgramInternalForm::Identifier::CONSTANT;
+	}
+
+	if (identifier[0] == '\'')
+	{
+		// string constant
+		return ProgramInternalForm::Identifier::CONSTANT;
+	}
+
+	if (identifier == "true" || identifier == "false")
+	{
+		// boolean constant
+		return ProgramInternalForm::Identifier::CONSTANT;
+	}
+
+	for (auto& c : identifier)
+	{
+		// variable
+		if (!isalnum(c) && c != '_')
+		{
+			throw SyntaxErrorException("variable contains invalid characters", lineCount);
+		}
+	}
+
+	return ProgramInternalForm::Identifier::ID;
 }
 
 std::vector<std::string>& Scanner::getTokensPositionList()
