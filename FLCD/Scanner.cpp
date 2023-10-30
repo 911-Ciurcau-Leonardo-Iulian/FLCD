@@ -200,7 +200,7 @@ ProgramInternalForm::Identifier Scanner::determineIdentifierType(std::string ide
 	{
 		for (int i = 1; i < identifier.size(); i++)
 		{
-			if (!isdigit(identifier[0]))
+			if (!isdigit(identifier[i]))
 			{
 				throw SyntaxErrorException("variable cannot start with digit", lineCount);
 			}
