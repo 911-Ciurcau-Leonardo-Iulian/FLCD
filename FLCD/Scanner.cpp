@@ -83,7 +83,7 @@ void Scanner::scan(std::string programFile)
 					else if (currentWord.size() > 0)
 					{
 						// before beginning of string we have an id or const, which is illegal
-						throw SyntaxErrorException("misplaced string", lineCount);
+						throw SyntaxErrorException("misplaced string", lineCount, currentWord);
 					}
 
 					// if we are looking inside a string literal, we have to take spaces into account
@@ -93,7 +93,7 @@ void Scanner::scan(std::string programFile)
 					if (strchr(originalStringPosition + 1, '\'') == nullptr)
 					{
 						// end quote not found
-						throw SyntaxErrorException("end quote of string not found", lineCount);
+						throw SyntaxErrorException("end quote of string not found", lineCount, originalStringPosition);
 					}
 					
 					char* afterStringToken = nullptr;
@@ -202,7 +202,7 @@ ProgramInternalForm::Identifier Scanner::determineIdentifierType(std::string ide
 		{
 			if (!isdigit(identifier[i]))
 			{
-				throw SyntaxErrorException("variable cannot start with digit", lineCount);
+				throw SyntaxErrorException("variable cannot start with digit", lineCount, identifier);
 			}
 		}
 
@@ -227,7 +227,7 @@ ProgramInternalForm::Identifier Scanner::determineIdentifierType(std::string ide
 		// variable
 		if (!isalnum(c) && c != '_')
 		{
-			throw SyntaxErrorException("variable contains invalid characters", lineCount);
+			throw SyntaxErrorException("variable contains invalid characters", lineCount, identifier);
 		}
 	}
 

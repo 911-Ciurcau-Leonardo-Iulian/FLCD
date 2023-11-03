@@ -12,7 +12,7 @@ int main()
 		SymbolTable symbolTable = SymbolTable();
 		ProgramInternalForm programInternalForm = ProgramInternalForm();
 		Scanner scanner = Scanner("tokens.txt", symbolTable, programInternalForm);
-		scanner.scan("p2.txt");
+		scanner.scan("p1.txt");
 		symbolTable.fprint("st.out");
 		programInternalForm.fprint("pif.out", scanner.getTokensPositionList());
 	}
