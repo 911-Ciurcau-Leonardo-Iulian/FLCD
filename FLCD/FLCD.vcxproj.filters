@@ -36,6 +36,9 @@
     <ClCompile Include="SyntaxErrorException.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FiniteAutomaton.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="HashTable.h">
@@ -48,6 +51,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ProgramInternalForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FiniteAutomaton.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -73,6 +79,9 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="pif.out">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="FA.in">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

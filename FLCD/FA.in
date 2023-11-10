@@ -1,0 +1,12 @@
+P,Q,R
+
+P
+
+a,b
+
+P,a,Q
+Q,a,Q
+Q,b,R
+P,b,R
+
+R
