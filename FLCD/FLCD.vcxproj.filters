@@ -84,5 +84,11 @@
     <None Include="FA.in">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="goodSequence.in">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="badSequence.in">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

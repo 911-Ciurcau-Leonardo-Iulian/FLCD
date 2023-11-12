@@ -7,11 +7,16 @@
 #include "HashTable.cpp"
 
 class FiniteAutomaton {
+public:
+	struct TransitionPart {
+		std::string terminal;
+		std::string outputState;
+	};
 private:
 	std::vector<std::string> states;
 	std::string initialState;
 	std::vector<std::string> alphabet;
-	HashTable<std::string, std::vector<std::pair<std::string, std::string>>> transitions;
+	HashTable<std::string, std::vector<TransitionPart>> transitions;
 	std::vector<std::string> finalStates;
 public:
 	enum Stage {
@@ -23,10 +28,11 @@ public:
 	};
 
 	FiniteAutomaton(std::string inputFile);
+	bool isDeterministic();
 	std::vector<std::string>& getStates();
 	std::string& getInitialState();
 	std::vector<std::string>& getAlphabet();
-	HashTable<std::string, std::vector<std::pair<std::string, std::string>>>& getTransitions();
+	HashTable<std::string, std::vector<TransitionPart>>& getTransitions();
 	std::vector<std::string>& getFinalStates();
 	void outputStates(std::ostream& out=std::cout);
 	void outputInitialState(std::ostream& out=std::cout);

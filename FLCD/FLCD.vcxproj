@@ -151,8 +151,10 @@
     <Text Include="tokens.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="badSequence.in" />
     <None Include="FA.in" />
     <None Include="pif.out" />
+    <None Include="goodSequence.in" />
     <None Include="st.out" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

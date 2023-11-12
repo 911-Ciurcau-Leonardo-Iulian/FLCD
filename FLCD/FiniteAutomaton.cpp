@@ -47,12 +47,12 @@ FiniteAutomaton::FiniteAutomaton(std::string inputFile)
 					if (transition == nullptr)
 					{
 						transitions.add(inState,
-							std::vector<std::pair<std::string, std::string>>{std::make_pair(terminal, outState)}
+							std::vector<TransitionPart>{{ terminal, outState }}
 						);
 					}
 					else
 					{
-						transition->push_back(std::make_pair(terminal, outState));
+						transition->push_back({ terminal, outState });
 					}
 				}
 					break;
@@ -70,6 +70,31 @@ FiniteAutomaton::FiniteAutomaton(std::string inputFile)
 	fin.close();
 }
 
+bool FiniteAutomaton::isDeterministic()
+{
+	for (auto& state : states)
+	{
+		auto currentTransitions = transitions.get(state);
+		if (currentTransitions != nullptr)
+		{
+			HashTable<std::string, int> outputStateFrequency;
+			for (auto& transition : *currentTransitions)
+			{
+				if (outputStateFrequency.contains(transition.outputState))
+				{
+					return false;
+				}
+				else
+				{
+					outputStateFrequency.add(transition.outputState, 1);
+				}
+			}
+		}
+	}
+
+	return true;
+}
+
 std::vector<std::string>& FiniteAutomaton::getStates()
 {
 	return states;
@@ -85,7 +110,7 @@ std::vector<std::string>& FiniteAutomaton::getAlphabet()
 	return alphabet;
 }
 
-HashTable<std::string, std::vector<std::pair<std::string, std::string>>>& FiniteAutomaton::getTransitions()
+HashTable<std::string, std::vector<FiniteAutomaton::TransitionPart>>& FiniteAutomaton::getTransitions()
 {
 	return transitions;
 }
@@ -125,7 +150,7 @@ void FiniteAutomaton::outputTransitions(std::ostream& out)
 		{
 			for (auto& transition : *currentTransitions)
 			{
-				std::cout << state << ' ' << transition.first << ' ' << transition.second << '\n';
+				std::cout << state << ' ' << transition.terminal << ' ' << transition.outputState << '\n';
 			}
 			std::cout << '\n';
 		}
