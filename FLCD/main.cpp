@@ -1,11 +1,16 @@
 #include "FiniteAutomaton.h"
+#define outputBool(cond) ((cond) ? "true" : "false")
 
 void printMenu();
 
 int main()
 {
 	FiniteAutomaton fa("FA.in");
-	std::cout << "Is deterministic: " << fa.isDeterministic() << "\n\n";
+	std::cout << "Is deterministic: " << outputBool(fa.isDeterministic()) << '\n';
+	std::cout << "Accepts good sequence: " << outputBool(fa.acceptsSequence("goodSequence.in")) << '\n';
+	std::cout << "Accepts bad sequence: " << outputBool(fa.acceptsSequence("badSequence.in")) << '\n';
+	std::cout << '\n';
+
 	int command;
 	do
 	{

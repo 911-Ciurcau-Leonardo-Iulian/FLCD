@@ -95,6 +95,59 @@ bool FiniteAutomaton::isDeterministic()
 	return true;
 }
 
+bool FiniteAutomaton::acceptsSequence(std::string inputFile)
+{
+	if (!isDeterministic())
+	{
+		return false;
+	}
+
+	std::ifstream fin(inputFile);
+	if (!fin.is_open())
+	{
+		throw std::runtime_error(inputFile + " could not be opened");
+	}
+	
+	std::string currentState = initialState;
+	std::string terminal;
+	while (std::getline(fin, terminal))
+	{
+		auto currentTransitions = transitions.get(currentState);
+		if (currentTransitions == nullptr)
+		{
+			return false;
+		}
+
+		bool found = false;
+		for (auto& transitionPart : *currentTransitions)
+		{
+			if (transitionPart.terminal == terminal)
+			{
+				currentState = transitionPart.outputState;
+				found = true;
+				break;
+			}
+		}
+
+		if (!found)
+		{
+			return false;
+		}
+	}
+
+	fin.close();
+	
+	for (auto& state : finalStates)
+	{
+		if (state == currentState)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 std::vector<std::string>& FiniteAutomaton::getStates()
 {
 	return states;

@@ -29,6 +29,7 @@ public:
 
 	FiniteAutomaton(std::string inputFile);
 	bool isDeterministic();
+	bool acceptsSequence(std::string inputFile);
 	std::vector<std::string>& getStates();
 	std::string& getInitialState();
 	std::vector<std::string>& getAlphabet();
