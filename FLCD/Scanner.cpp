@@ -10,10 +10,10 @@ Scanner::Scanner(
 	std::string integerFAFile
 ) : symbolTable(symbolTable),
 	programInternalForm(programInternalForm),
-	lineCount(0)
+	lineCount(0),
+	variableFA(FiniteAutomaton(variableFAFile)),
+	integerFA(FiniteAutomaton(integerFAFile))
 {
-	variableFA = FiniteAutomaton(variableFAFile);
-	integerFA = FiniteAutomaton(integerFAFile);
 
 	std::ifstream fin(tokensFile);
 	std::string currentToken;
@@ -201,15 +201,19 @@ void Scanner::addIdentifier(std::string identifier)
 
 ProgramInternalForm::Identifier Scanner::determineIdentifierType(std::string identifier)
 {
+	std::string prepared = "";
+	for (auto& c : identifier)
+	{
+		prepared += c;
+		prepared += '\n';
+	}
+
 	if (isdigit(identifier[0]))
 	{
-		
-		for (int i = 1; i < identifier.size(); i++)
+
+		if (!integerFA.acceptsSequenceFromString(prepared))
 		{
-			if (!isdigit(identifier[i]))
-			{
-				throw SyntaxErrorException("variable cannot start with digit", lineCount, identifier);
-			}
+			throw SyntaxErrorException("variable cannot start with digit", lineCount, identifier);
 		}
 
 		// numeric constant
@@ -228,13 +232,9 @@ ProgramInternalForm::Identifier Scanner::determineIdentifierType(std::string ide
 		return ProgramInternalForm::Identifier::CONSTANT;
 	}
 
-	for (auto& c : identifier)
+	if (!variableFA.acceptsSequenceFromString(prepared))
 	{
-		// variable
-		if (!isalnum(c) && c != '_')
-		{
-			throw SyntaxErrorException("variable contains invalid characters", lineCount, identifier);
-		}
+		throw SyntaxErrorException("variable contains invalid characters", lineCount, identifier);
 	}
 
 	return ProgramInternalForm::Identifier::ID;

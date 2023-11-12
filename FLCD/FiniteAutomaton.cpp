@@ -2,7 +2,7 @@
 
 FiniteAutomaton::FiniteAutomaton() {}
 
-FiniteAutomaton::FiniteAutomaton(std::string inputFile)
+FiniteAutomaton::FiniteAutomaton(std::string inputFile) : transitions(HashTable<std::string, std::vector<TransitionPart>>())
 {
 	std::string line;
 	std::ifstream fin(inputFile);
