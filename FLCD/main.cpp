@@ -5,41 +5,52 @@ void printMenu();
 
 int main()
 {
-	FiniteAutomaton fa("FA.in");
-	std::cout << "Is deterministic: " << outputBool(fa.isDeterministic()) << '\n';
-	std::cout << "Accepts good sequence: " << outputBool(fa.acceptsSequence("goodSequence.in")) << '\n';
-	std::cout << "Accepts bad sequence: " << outputBool(fa.acceptsSequence("badSequence.in")) << '\n';
-	std::cout << '\n';
+	std::string identifierFile;
+	std::cout << "enter identifier file: ";
+	std::cin >> identifierFile;
 
-	int command;
-	do
+	try 
 	{
-		printMenu();
-		std::cin >> command;
+		FiniteAutomaton fa(identifierFile);
+		std::cout << "Is deterministic: " << outputBool(fa.isDeterministic()) << '\n';
+		std::cout << "Accepts good sequence: " << outputBool(fa.acceptsSequence("goodSequence.in")) << '\n';
+		std::cout << "Accepts bad sequence: " << outputBool(fa.acceptsSequence("badSequence.in")) << '\n';
 		std::cout << '\n';
-		switch (command)
-		{
-		case FiniteAutomaton::Stage::STATES:
-			fa.outputStates();
-			break;
-		case FiniteAutomaton::Stage::INITIAL_STATE:
-			fa.outputInitialState();
-			break;
-		case FiniteAutomaton::Stage::ALPHABET:
-			fa.outputAlphabet();
-			break;
-		case FiniteAutomaton::Stage::TRANSITIONS:
-			fa.outputTransitions();
-			break;
-		case FiniteAutomaton::Stage::FINAL_STATES:
-			fa.outputFinalStates();
-			break;
-		default:
-			break;
-		}
 
-		std::cout << "\n\n";
-	} while (command != 5);
+		int command;
+		do
+		{
+			printMenu();
+			std::cin >> command;
+			std::cout << '\n';
+			switch (command)
+			{
+			case FiniteAutomaton::Stage::STATES:
+				fa.outputStates();
+				break;
+			case FiniteAutomaton::Stage::INITIAL_STATE:
+				fa.outputInitialState();
+				break;
+			case FiniteAutomaton::Stage::ALPHABET:
+				fa.outputAlphabet();
+				break;
+			case FiniteAutomaton::Stage::TRANSITIONS:
+				fa.outputTransitions();
+				break;
+			case FiniteAutomaton::Stage::FINAL_STATES:
+				fa.outputFinalStates();
+				break;
+			default:
+				break;
+			}
+
+			std::cout << "\n\n";
+		} while (command != 5);
+	}
+	catch (std::exception& e)
+	{
+		std::cout << e.what() << '\n';
+	}
 
 	return 0;
 }

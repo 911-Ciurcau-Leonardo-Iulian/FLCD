@@ -97,11 +97,6 @@ bool FiniteAutomaton::isDeterministic()
 
 bool FiniteAutomaton::acceptsSequence(std::string inputFile)
 {
-	if (!isDeterministic())
-	{
-		return false;
-	}
-
 	std::ifstream fin(inputFile);
 	if (!fin.is_open())
 	{
@@ -212,7 +207,7 @@ void FiniteAutomaton::outputTransitions(std::ostream& out)
 
 void FiniteAutomaton::outputFinalStates(std::ostream& out)
 {
-	for (auto& state : states)
+	for (auto& state : finalStates)
 	{
 		std::cout << state << ' ';
 	}

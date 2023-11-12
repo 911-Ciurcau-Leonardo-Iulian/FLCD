@@ -90,5 +90,11 @@
     <None Include="badSequence.in">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="identifierFA.in">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="integerFA.in">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
