@@ -30,7 +30,6 @@ public:
 		FINAL_STATES
 	};
 
-	FiniteAutomaton();
 	FiniteAutomaton(std::string inputFile);
 	bool isDeterministic();
 	bool acceptsSequenceFromFile(std::string inputFile);
