@@ -94,3 +94,48 @@ std::vector<std::string>& FiniteAutomaton::getFinalStates()
 {
 	return finalStates;
 }
+
+void FiniteAutomaton::outputStates(std::ostream& out)
+{
+	for (auto& state : states)
+	{
+		out << state << ' ';
+	}
+}
+
+void FiniteAutomaton::outputInitialState(std::ostream& out)
+{
+	out << initialState;
+}
+
+void FiniteAutomaton::outputAlphabet(std::ostream& out)
+{
+	for (auto& terminal : alphabet)
+	{
+		std::cout << terminal << ' ';
+	}
+}
+
+void FiniteAutomaton::outputTransitions(std::ostream& out)
+{
+	for (auto& state : states)
+	{
+		auto currentTransitions = transitions.get(state);
+		if (currentTransitions != nullptr)
+		{
+			for (auto& transition : *currentTransitions)
+			{
+				std::cout << state << ' ' << transition.first << ' ' << transition.second << '\n';
+			}
+			std::cout << '\n';
+		}
+	}
+}
+
+void FiniteAutomaton::outputFinalStates(std::ostream& out)
+{
+	for (auto& state : states)
+	{
+		std::cout << state << ' ';
+	}
+}

@@ -28,4 +28,9 @@ public:
 	std::vector<std::string>& getAlphabet();
 	HashTable<std::string, std::vector<std::pair<std::string, std::string>>>& getTransitions();
 	std::vector<std::string>& getFinalStates();
+	void outputStates(std::ostream& out=std::cout);
+	void outputInitialState(std::ostream& out=std::cout);
+	void outputAlphabet(std::ostream& out=std::cout);
+	void outputTransitions(std::ostream& out=std::cout);
+	void outputFinalStates(std::ostream& out=std::cout);
 };

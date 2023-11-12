@@ -12,55 +12,20 @@ int main()
 		switch (command)
 		{
 		case FiniteAutomaton::Stage::STATES:
-		{
-			auto& states = fa.getStates();
-			for (auto& state : states)
-			{
-				std::cout << state << ' ';
-			}
-		}
+			fa.outputStates();
 			break;
 		case FiniteAutomaton::Stage::INITIAL_STATE:
-		{
-			std::cout << fa.getInitialState();
-		}
+			fa.outputInitialState();
 			break;
 		case FiniteAutomaton::Stage::ALPHABET:
-		{
-			auto& alphabet = fa.getAlphabet();
-			for (auto& terminal : alphabet)
-			{
-				std::cout << terminal << ' ';
-			}
-		}
+			fa.outputAlphabet();
 			break;
 		case FiniteAutomaton::Stage::TRANSITIONS:
-		{
-			auto& states = fa.getStates();
-			auto& transitions = fa.getTransitions();
-			for (auto& state : states)
-			{
-				auto currentTransitions = transitions.get(state);
-				if (currentTransitions != nullptr)
-				{
-					for (auto& transition : *currentTransitions)
-					{
-						std::cout << state << ' ' << transition.first << ' ' << transition.second << '\n';
-					}
-					std::cout << '\n';
-				}
-			}
-		}
+			fa.outputTransitions();
 			break;
 		case FiniteAutomaton::Stage::FINAL_STATES:
-		{
-			auto& states = fa.getFinalStates();
-			for (auto& state : states)
-			{
-				std::cout << state << ' ';
-			}
-		}
-		break;
+			fa.outputFinalStates();
+			break;
 		default:
 			break;
 		}
