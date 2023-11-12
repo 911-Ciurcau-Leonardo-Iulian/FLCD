@@ -4,6 +4,7 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include <sstream>
 #include "HashTable.cpp"
 
 class FiniteAutomaton {
@@ -18,6 +19,8 @@ private:
 	std::vector<std::string> alphabet;
 	HashTable<std::string, std::vector<TransitionPart>> transitions;
 	std::vector<std::string> finalStates;
+
+	bool acceptsSequence(std::istream& in);
 public:
 	enum Stage {
 		STATES,
@@ -27,9 +30,11 @@ public:
 		FINAL_STATES
 	};
 
+	FiniteAutomaton();
 	FiniteAutomaton(std::string inputFile);
 	bool isDeterministic();
-	bool acceptsSequence(std::string inputFile);
+	bool acceptsSequenceFromFile(std::string inputFile);
+	bool acceptsSequenceFromString(std::string sequence);
 	std::vector<std::string>& getStates();
 	std::string& getInitialState();
 	std::vector<std::string>& getAlphabet();

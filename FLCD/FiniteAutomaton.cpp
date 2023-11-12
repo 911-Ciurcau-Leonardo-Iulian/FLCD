@@ -1,5 +1,7 @@
 #include "FiniteAutomaton.h"
 
+FiniteAutomaton::FiniteAutomaton() {}
+
 FiniteAutomaton::FiniteAutomaton(std::string inputFile)
 {
 	std::string line;
@@ -95,7 +97,7 @@ bool FiniteAutomaton::isDeterministic()
 	return true;
 }
 
-bool FiniteAutomaton::acceptsSequence(std::string inputFile)
+bool FiniteAutomaton::acceptsSequenceFromFile(std::string inputFile)
 {
 	std::ifstream fin(inputFile);
 	if (!fin.is_open())
@@ -103,9 +105,23 @@ bool FiniteAutomaton::acceptsSequence(std::string inputFile)
 		throw std::runtime_error(inputFile + " could not be opened");
 	}
 	
+	bool accepts = acceptsSequence(fin);
+	fin.close();
+	return accepts;
+}
+
+bool FiniteAutomaton::acceptsSequenceFromString(std::string sequence)
+{
+	std::istringstream in(sequence);
+	return acceptsSequence(in);
+}
+
+
+bool FiniteAutomaton::acceptsSequence(std::istream& in)
+{
 	std::string currentState = initialState;
 	std::string terminal;
-	while (std::getline(fin, terminal))
+	while (std::getline(in, terminal))
 	{
 		auto currentTransitions = transitions.get(currentState);
 		if (currentTransitions == nullptr)
@@ -130,8 +146,6 @@ bool FiniteAutomaton::acceptsSequence(std::string inputFile)
 		}
 	}
 
-	fin.close();
-	
 	for (auto& state : finalStates)
 	{
 		if (state == currentState)
@@ -139,8 +153,6 @@ bool FiniteAutomaton::acceptsSequence(std::string inputFile)
 			return true;
 		}
 	}
-
-	return false;
 }
 
 std::vector<std::string>& FiniteAutomaton::getStates()

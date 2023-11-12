@@ -13,8 +13,8 @@ int main()
 	{
 		FiniteAutomaton fa(identifierFile);
 		std::cout << "Is deterministic: " << outputBool(fa.isDeterministic()) << '\n';
-		std::cout << "Accepts good sequence: " << outputBool(fa.acceptsSequence("goodSequence.in")) << '\n';
-		std::cout << "Accepts bad sequence: " << outputBool(fa.acceptsSequence("badSequence.in")) << '\n';
+		std::cout << "Accepts good sequence: " << outputBool(fa.acceptsSequenceFromFile("goodSequence.in")) << '\n';
+		std::cout << "Accepts bad sequence: " << outputBool(fa.acceptsSequenceFromFile("badSequence.in")) << '\n';
 		std::cout << '\n';
 
 		int command;

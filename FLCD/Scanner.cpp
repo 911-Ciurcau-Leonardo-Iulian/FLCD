@@ -5,11 +5,16 @@ int Scanner::globalTokenId;
 Scanner::Scanner(
 	std::string tokensFile, 
 	SymbolTable& symbolTable, 
-	ProgramInternalForm& programInternalForm
+	ProgramInternalForm& programInternalForm,
+	std::string variableFAFile,
+	std::string integerFAFile
 ) : symbolTable(symbolTable),
 	programInternalForm(programInternalForm),
 	lineCount(0)
 {
+	variableFA = FiniteAutomaton(variableFAFile);
+	integerFA = FiniteAutomaton(integerFAFile);
+
 	std::ifstream fin(tokensFile);
 	std::string currentToken;
 
@@ -198,6 +203,7 @@ ProgramInternalForm::Identifier Scanner::determineIdentifierType(std::string ide
 {
 	if (isdigit(identifier[0]))
 	{
+		
 		for (int i = 1; i < identifier.size(); i++)
 		{
 			if (!isdigit(identifier[i]))
