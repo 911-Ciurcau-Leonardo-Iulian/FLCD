@@ -22,7 +22,7 @@ FiniteAutomaton::FiniteAutomaton(std::string inputFile) : transitions(HashTable<
 		{
 			const char* delimiters = ",";
 			char* nextToken = nullptr;
-			char* token = strtok_s(const_cast<char*>(line.c_str()), delimiters, &nextToken);
+			char* token = STR_TOK_SECURE(const_cast<char*>(line.c_str()), delimiters, &nextToken);
 			while (token)
 			{
 				switch (currentReadStage)
@@ -39,9 +39,9 @@ FiniteAutomaton::FiniteAutomaton(std::string inputFile) : transitions(HashTable<
 				case Stage::TRANSITIONS:
 				{
 					std::string inState = token;
-					token = strtok_s(NULL, delimiters, &nextToken);
+					token = STR_TOK_SECURE(NULL, delimiters, &nextToken);
 					std::string terminal = token;
-					token = strtok_s(NULL, delimiters, &nextToken);
+					token = STR_TOK_SECURE(NULL, delimiters, &nextToken);
 					std::string outState = token;
 					auto transition = transitions.get(inState);
 					if (transition == nullptr)
@@ -62,7 +62,7 @@ FiniteAutomaton::FiniteAutomaton(std::string inputFile) : transitions(HashTable<
 				default:
 					break;
 				}
-				token = strtok_s(NULL, delimiters, &nextToken);
+				token = STR_TOK_SECURE(NULL, delimiters, &nextToken);
 			}
 		}
 	}
@@ -151,6 +151,8 @@ bool FiniteAutomaton::acceptsSequence(std::istream& in)
 			return true;
 		}
 	}
+
+	return false;
 }
 
 std::vector<std::string>& FiniteAutomaton::getStates()

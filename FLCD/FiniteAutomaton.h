@@ -5,6 +5,8 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include <cstring>
+#include "utils.h"
 #include "HashTable.cpp"
 
 class FiniteAutomaton {

@@ -65,7 +65,7 @@ void Scanner::scan(std::string programFile)
 		lineCount++;
 		originalCurrentLine = currentLine;
 		char* nextToken = nullptr;
-		char* token = strtok_s(const_cast<char*>(currentLine.c_str()), delimiters, &nextToken);
+		char* token = STR_TOK_SECURE(const_cast<char*>(currentLine.c_str()), delimiters, &nextToken);
 
 		while (token)
 		{
@@ -102,7 +102,7 @@ void Scanner::scan(std::string programFile)
 					}
 					
 					char* afterStringToken = nullptr;
-					char* stringContent = strtok_s((char*)originalStringPosition + 1, "'", &afterStringToken);
+					char* stringContent = STR_TOK_SECURE((char*)originalStringPosition + 1, "'", &afterStringToken);
 					std::string stringLiteral = "'" + std::string(stringContent) + "'";
 
 					int position = symbolTable.getPosition(stringLiteral);
@@ -115,7 +115,7 @@ void Scanner::scan(std::string programFile)
 					programInternalForm.add(ProgramInternalForm::Identifier::CONSTANT, position);
 
 					nextToken = nullptr;
-					token = strtok_s(afterStringToken, delimiters, &nextToken);
+					token = STR_TOK_SECURE(afterStringToken, delimiters, &nextToken);
 					goto while_token_label;
 				}
 
@@ -183,7 +183,7 @@ void Scanner::scan(std::string programFile)
 				addIdentifier(currentWord);
 			}
 
-			token = strtok_s(nullptr, delimiters, &nextToken);
+			token = STR_TOK_SECURE(nullptr, delimiters, &nextToken);
 		}
 	next_line_label:
 		continue;
