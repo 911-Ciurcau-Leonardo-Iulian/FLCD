@@ -127,6 +127,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FiniteAutomaton.cpp" />
     <ClCompile Include="HashTable.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ProgramInternalForm.cpp" />
@@ -136,6 +137,7 @@
     <ClCompile Include="SyntaxErrorException.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FiniteAutomaton.h" />
     <ClInclude Include="HashTable.h" />
     <ClInclude Include="ProgramInternalForm.h" />
     <ClInclude Include="Scanner.h" />
@@ -149,7 +151,12 @@
     <Text Include="tokens.txt" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="badSequence.in" />
+    <None Include="FA.in" />
+    <None Include="identifierFA.in" />
+    <None Include="integerFA.in" />
     <None Include="pif.out" />
+    <None Include="goodSequence.in" />
     <None Include="st.out" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
